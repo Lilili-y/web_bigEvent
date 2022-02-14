@@ -55,6 +55,7 @@ $(function () {
         if (res.status !== 0) {
           return layer.msg('账号或密码错误')
         }
+        //将身份验证令牌存放到localStorage 
         localStorage.setItem("token", res.token);
         location.href='index.html'
       }
