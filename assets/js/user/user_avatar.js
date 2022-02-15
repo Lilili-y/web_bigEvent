@@ -29,4 +29,25 @@ $(function () {
             .attr('src', imgURL) // 重新设置图片路径
             .cropper(options) // 重新初始化裁剪区域
     })
+    $('#btnUpload').on('click', e => {
+        var dataURL = $image
+        .cropper('getCroppedCanvas', {
+          // 创建一个 Canvas 画布
+          width: 100,
+          height: 100
+        })
+            .toDataURL('image/png')
+        $.ajax({
+            method: 'POST',
+            url: '/my/update/avatar',
+            data: {
+                avatar:dataURL
+            },
+            success: (res) => {
+                if (res.status !== 0) return layer.msg(res.message);
+                layer.msg('更换头像成功！');
+                window.parent.getUserInfo();//子文件调用父文件的方法window.parent
+            }
+        })
+    })
 })
